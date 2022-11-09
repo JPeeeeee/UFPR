@@ -24,7 +24,7 @@ int encontrarTag (char ch, FILE* arq, char *chave){
 void sumarizarPeriodicosOuRevistas(FILE *arq){
     char ch;
     char *str = malloc(sizeof(char) * 512);
-    char **periodicoOuRevista = malloc(sizeof(str) * 512);
+    char **periodicoOuRevista = malloc(512 * 512);
     int i = 0;
     // Enquanto o arquivo nao acabar
      while (ch != EOF) {
@@ -37,10 +37,9 @@ void sumarizarPeriodicosOuRevistas(FILE *arq){
                 strncat(str, &ch, 1);
                 ch = fgetc(arq);
             }
-
+            
             //arrumar problema malloc
-
-            periodicoOuRevista[i] = malloc(sizeof(str));
+            periodicoOuRevista[i] = malloc(sizeof(str) + 1);
             strcpy(periodicoOuRevista[i], str);
             printf("string: %s\n", periodicoOuRevista[i]);
             i++;
