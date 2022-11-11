@@ -21,10 +21,10 @@ int encontrarTag (char ch, FILE* arq, char *chave){
     return 1;
 }
 
-char** vetorizaStrings(FILE *arq){
+// Insere strings desejadas no vetor v e retorna o tamanho de v
+int vetorizaStrings(FILE *arq, char** v){
     char ch;
     char *str = malloc(sizeof(char) * 512); // string auxiliar
-    char** periodicoOuRevista = malloc(sizeof(str) * 512); // Vetor de strings
     int i = 0;
 
     // Enquanto o arquivo nao acabar
@@ -40,28 +40,44 @@ char** vetorizaStrings(FILE *arq){
                 ch = fgetc(arq); // Pega o proximo char
             }
             
-            periodicoOuRevista[i] = malloc(sizeof(char) * 512); // Aloca espaco para a string dentro do vetor
-            strcpy(periodicoOuRevista[i], str); // copia a string para dentro do vetor
-            printf("string: %s\n", periodicoOuRevista[i]);
+            v[i] = malloc(sizeof(char) * 512); // Aloca espaco para a string dentro do vetor
+            strcpy(v[i], str); // copia a string para dentro do vetor
+            printf("string: %s\n", v[i]);
             i++; // itera "i", o numero de elementos no vetor
             strcpy(str, ""); // limpa a string str
         }
     };
-
-    for (int j = 0; j < i; j++)
-        free(periodicoOuRevista)
-
     free(str);
-
+    return i;
 }
 
 // fazer funcao especifica para comparar strings usando encontrar tag
+char *descobreNivelPeriodicos(char ch, FILE *arq, char *string){
+    if (encontrarTag(ch, arq, string)){
+        printf("ACHEEEEEEEEEEEEEI\n");
+        return "oioioi";
+    }
+    printf("num achei :(\n")
+    return "oiioio";
+}
 
 int main()
 {
     FILE* arq;
-    char **periodicosOuRevistas;
+    char **vetor_s = malloc(sizeof(char) * 512 * 512);
+    char **A1 = malloc(sizeof(char) * 512 * 512);
+    char **A2 = malloc(sizeof(char) * 512 * 512);
+    char **A3 = malloc(sizeof(char) * 512 * 512);
+    char **A4 = malloc(sizeof(char) * 512 * 512);
+    char **B1 = malloc(sizeof(char) * 512 * 512);
+    char **B2 = malloc(sizeof(char) * 512 * 512);
+    char **B3 = malloc(sizeof(char) * 512 * 512);
+    char **B4 = malloc(sizeof(char) * 512 * 512);
+    char **C = malloc(sizeof(char) * 512 * 512);
 
+    //encontrar jeito de transformar a filtragem dos periodicos
+
+    
     // Abre o arquivo em modo de leitura
     arq = fopen("curriculo.xml", "r");
  
@@ -70,9 +86,15 @@ int main()
         printf("file can't be opened \n");
         return 0;
     }
-
+    char ch = fgetc(arq);
     // Acessa coloca todos os periodicos ou revistas em uma variavel
-    periodicosOuRevistas = vetorizaStrings(arq);
+    int tam = vetorizaStrings(arq, vetor_s);
+
+    for (int j = 0; j < tam; j++)
+        free(vetor_s[j]);
+
+    free(vetor_s);
+ // Libera string auxiliar
     // Fecha arquivo
     fclose(arq);
     return 0;
