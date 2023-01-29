@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -lm -o
 
-main.o : main.c 
-	$(CC) main.c $(CFLAGS) main
+myht.o : myht.c 
+	$(CC) myht.c $(CFLAGS) myht
 
 clean :
-	rm -f *.o main
+	rm -f *.o myht
