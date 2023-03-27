@@ -67,7 +67,7 @@ int insere_fila (fila_t* f, wchar_t c, int chave) {
     novo->prev = f->fim;
     novo->chaves = malloc(sizeof(int));
     novo->chaves[0] = chave;
-    novo->tamanho++;
+    novo->tamanho = 1;
 
     if (fila_vazia(f)){
         f->ini = novo;

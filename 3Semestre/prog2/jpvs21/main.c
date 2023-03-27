@@ -14,7 +14,6 @@ void coleta_dados_texto (FILE *livro_cifra, fila_t *f) {
     int p = 0;
 
     while (fscanf(livro_cifra, "%ls", palavra) != EOF) {
-		printf("%ls, ", palavra);
 		wchar_t primeira_letra;
 		
 		// Rever com professor
@@ -41,8 +40,6 @@ int main(int argc, char *argv[]) {
 
     if (livro_cifra == NULL)
       return -1;
-
-	printf("Palavras: ");
 
 	coleta_dados_texto(livro_cifra, f);
 
