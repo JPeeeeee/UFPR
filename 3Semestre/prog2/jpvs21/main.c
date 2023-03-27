@@ -32,8 +32,6 @@ void coleta_dados_texto (FILE *livro_cifra, fila_t *f) {
 int main(int argc, char *argv[]) {
     setlocale(LC_ALL,"");
 
-	printf("argumento: %s\n", argv[1]);
-
     FILE *livro_cifra;
 
     fila_t *f = cria_fila();
@@ -46,7 +44,7 @@ int main(int argc, char *argv[]) {
 
 	printf("Palavras: ");
 
-	// coleta_dados_texto(livro_cifra, f);
+	coleta_dados_texto(livro_cifra, f);
 
 	printf("\n");
 
