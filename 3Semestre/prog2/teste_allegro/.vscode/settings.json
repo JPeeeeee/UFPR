@@ -1,0 +1,5 @@
+{
+    "editor.autoClosingQuotes": "languageDefined",
+    "editor.autoClosingOvertype": "auto",
+    "C_Cpp.errorSquiggles": "disabled"
+}

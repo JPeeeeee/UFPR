@@ -133,7 +133,7 @@ local_t cria_local(mundo_t *mundo){
     local_t local;
 
     local.id = mundo->Nlocais;
-    local.lotacao = 5 + rand() % (10);
+    local.lotacao = 5 + rand() % (3);
     local.publico = cria_conjunto(local.lotacao);
     local.fila = cria_fila();
     local.localizacao[0] = rand() % mundo->NtamanhoMundo - 1;
