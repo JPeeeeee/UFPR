@@ -4,58 +4,29 @@
  */
 #include <wchar.h>
 
-struct nodo_f {
-    int chave
+enum Cor {
+    RED,
+    BLACK
 };
-typedef struct nodo_f nodo_f_t;
 
-struct fila {
-    nodo_f_t *ini;        /* ponteiro para o inicio da lista (obrigatorio)       */
-    nodo_f_t *fim;        /* ponteiro para o fim da lista (uso opcional)         */
-    int tamanho;        /* tamanho da lista (numero de elementos na lista)     */
+struct nodo {
+    int chave;
+    enum Cor cor;
+    wchar_t letra;
+    struct nodo *esq;
+    struct nodo *dir;
+    struct nodo *pai;
 };
-typedef struct fila fila_t;
+typedef struct nodo nodo_t;
 
-/*
- * Cria uma fila vazia e a retorna, se falhar retorna NULL.
- */
-fila_t * cria_fila ();
+void le_arvore(nodo_t *raiz);
 
-/*
- * Remove todos os elementos da fila, libera espaco e devolve NULL.
- */
-fila_t * destroi_fila (fila_t *f);
+nodo_t *cria_nodo();
 
-/*
- * Retorna 1 se a fila esta vazia e 0 caso contrario.
- */
-int fila_vazia (fila_t *f);
+// nodo_t *busca_RB_chave(nodo_t *raiz, int chave);
 
-/*
- * Retorna o tamanho da fila, isto eh, o numero de elementos presentes nela.
- */
-int tamanho_fila (fila_t *f);
+// nodo_t *busca_RB_letra(nodo_t *raiz, char letra);
 
-/*
- * Insere o elemento no final da fila (politica FIFO).
- * Retorna 1 se a operacao foi bem sucedida e 0 caso contrario.
- */
-int insere_fila (fila_t *f, wchar_t c, int chave);
+nodo_t *inclui_rb(nodo_t *raiz, wchar_t letra, int chave);
 
-
-int busca_fila (fila_t *f, wchar_t c);
-
-
-/*
- * Remove o elemento do inicio da fila (politica FIFO) e o retorna.
- * Retorna 1 se a operacao foi bem sucedida e 0 caso contrario.
- */
-wchar_t retira_fila (fila_t *f);
-
-
-/*
- * As funcoes abaixo permitem quebrar a politica FIFO da fila,
- * Permite acesso a elementos apontados pelo ponteiro 'atual'.
- * Este ponteiro pode ser inicializado e incrementado, viabilizando
- * a implementacao de um mecanismo iterador.
- */
+void remove_arvore(nodo_t *raiz);

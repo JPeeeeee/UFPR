@@ -3,6 +3,8 @@
 
  */
 #include <wchar.h>
+#ifndef fila_h
+#define fila_h
 
 struct nodo_f {
     wchar_t letra;          /* lista de numeros inteiros               */
@@ -63,3 +65,5 @@ wchar_t retira_fila (fila_t *f);
  * Este ponteiro pode ser inicializado e incrementado, viabilizando
  * a implementacao de um mecanismo iterador.
  */
+
+#endif
