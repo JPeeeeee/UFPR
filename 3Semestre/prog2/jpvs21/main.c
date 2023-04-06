@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h>
-#include <wchar.h>
 #include <unistd.h>
 #include "libfila.h"
 #include "libcodifica.h"
@@ -37,8 +36,7 @@
 
 int main(int argc, char *argv[]) {
 
-    fila_t *f = cria_fila();
-    char *LivroCifra, *ArquivoChaves, *MensagemSaida, *MensagemEntrada, *MensagemOriginal;
+    char *LivroCifra, *ArquivoChaves, *MensagemSaida, *MensagemEntrada;
     int option, flag_e, flag_d;
 
     while ((option = getopt (argc, argv, "edb:m:o:i:c:")) != -1)
@@ -59,7 +57,7 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'm':      // option -m was set
-                MensagemOriginal = optarg;
+                MensagemEntrada = optarg;
                 printf("usou o: %s\n", optarg);
                 break;
 
@@ -82,8 +80,13 @@ int main(int argc, char *argv[]) {
                 break;
         }
 
-    if (flag_e)
-        coleta_dados_texto_fila()
+    if (flag_e){
+        printf("Codificando mensagem...\n");
+        printf("Valor LivroCIfra: %s\n", LivroCifra);
+        coleta_dados_texto_fila(LivroCifra, ArquivoChaves, MensagemSaida, MensagemEntrada);
+    }
+    else if (flag_d)
+
     // while (argv[argv_counter]){
     //     if (argv[argv_counter][0] == '-') {
     //         char letra = argv[argv_counter][1];
@@ -143,19 +146,6 @@ int main(int argc, char *argv[]) {
 
 
     setlocale(LC_ALL,"");
-
-    nodo_f_t *aux = f->ini;
-
-    for (int i = 0; i < tamanho_fila(f); i++){
-        printf("%lc: ", aux->letra);
-
-    for (int j = 0; j < aux->tamanho; j++) {
-        printf("%d ", aux->chaves[j]);
-    }
-
-        printf("\n");
-        aux = aux->prox;
-    }
 
     return 0;
 }

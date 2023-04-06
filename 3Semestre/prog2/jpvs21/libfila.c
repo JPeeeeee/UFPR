@@ -17,19 +17,19 @@ fila_t* cria_fila () {
     return fila;
 }
 
-int busca_fila (fila_t *f, wchar_t c) {
+nodo_f_t *busca_fila (fila_t *f, char c) {
     nodo_f_t *aux = f->ini;
     
     while (aux != NULL) {
         if (aux->letra == c)
-            return 1;
+            return aux;
         aux = aux->prox;
     }
 
-    return 0;
+    return NULL;
 }
 
-int adiciona_chave (fila_t *f, wchar_t c, int chave) {
+int adiciona_chave (fila_t *f, char c, int chave) {
 
     nodo_f_t *aux = f->ini;
 
@@ -51,7 +51,7 @@ int adiciona_chave (fila_t *f, wchar_t c, int chave) {
     return 0;
 }
 
-int insere_fila (fila_t* f, wchar_t c, int chave) {
+int insere_fila (fila_t* f, char c, int chave) {
 
     if (busca_fila(f, c)){
         adiciona_chave(f, c, chave);
@@ -84,9 +84,9 @@ int insere_fila (fila_t* f, wchar_t c, int chave) {
     }
 }
 
-wchar_t retira_fila (fila_t* f) {    
+char retira_fila (fila_t* f) {    
 
-    wchar_t elemento;
+    char elemento;
 
     if (tamanho_fila(f) == 1){
         elemento = f->fim->letra;

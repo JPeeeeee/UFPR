@@ -1,3 +1,3 @@
 #include "libfila.h"
 
-fila_t *coleta_dados_texto_fila (char *nome_arquivo_cifra);
+void coleta_dados_texto_fila (char *LivroCifra, char *ArquivoChaves, char *MensagemSaida, char *MensagemEntrada);

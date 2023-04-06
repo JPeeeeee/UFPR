@@ -2,12 +2,11 @@
 /*
 
  */
-#include <wchar.h>
 #ifndef fila_h
 #define fila_h
 
 struct nodo_f {
-    wchar_t letra;          /* lista de numeros inteiros               */
+    char letra;          /* lista de numeros inteiros               */
     struct nodo_f *prox;  /* ponteiro para o proximo (obrigatorio)   */
     struct nodo_f *prev;  /* ponteiro para o anterior (uso opcional) */
     int *chaves;
@@ -46,17 +45,17 @@ int tamanho_fila (fila_t *f);
  * Insere o elemento no final da fila (politica FIFO).
  * Retorna 1 se a operacao foi bem sucedida e 0 caso contrario.
  */
-int insere_fila (fila_t *f, wchar_t c, int chave);
+int insere_fila (fila_t *f, char c, int chave);
 
 
-int busca_fila (fila_t *f, wchar_t c);
+nodo_f_t *busca_fila (fila_t *f, char c);
 
 
 /*
  * Remove o elemento do inicio da fila (politica FIFO) e o retorna.
  * Retorna 1 se a operacao foi bem sucedida e 0 caso contrario.
  */
-wchar_t retira_fila (fila_t *f);
+char retira_fila (fila_t *f);
 
 
 /*
