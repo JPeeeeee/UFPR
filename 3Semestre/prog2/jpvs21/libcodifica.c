@@ -1,5 +1,7 @@
 #define BUFF 255
+#include <stdio.h>
 #include <wchar.h>
+#include <ctype.h>
 #include "libcodifica.h"
 
 fila_t *coleta_dados_texto_fila (char *nome_arquivo_cifra) {
