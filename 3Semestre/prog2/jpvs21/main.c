@@ -36,7 +36,7 @@
 
 int main(int argc, char *argv[]) {
 
-    int option, flag_e, flag_d;
+    int option, flag_e, flag_d, flag_c, flag_b;
     FILE *livro_cifra = NULL;
     FILE *mensagem_entrada = NULL;
     FILE *arquivo_chaves = NULL;
@@ -46,37 +46,32 @@ int main(int argc, char *argv[]) {
         switch (option) {
             case 'e':      // option -e was set
                 flag_e = 1;
-                printf("usou e\n");
                 break;
 
             case 'd':   
                 flag_d = 1;   // option -d was set
-                printf("usou d: %s\n", optarg);
                 break;
 
             case 'o':      // option -o was set
                 mensagem_saida = fopen(optarg, "w");
-                printf("usou o: %s\n", optarg);
                 break;
 
             case 'm':      // option -m was set
                 mensagem_entrada = fopen(optarg, "r");
-                printf("usou o: %s\n", optarg);
                 break;
 
             case 'i':      // option -i was set
                 mensagem_entrada = fopen(optarg, "r");
-                printf("usou i: %s\n", optarg);
                 break;
 
             case 'c':      // option -c was set
                 arquivo_chaves = fopen(optarg, "w");
-                printf("usou c: %s\n", optarg);
+                flag_c = 1;
                 break;
 
             case 'b':      // option -b was set
                 livro_cifra = fopen(optarg, "r");
-                printf("usou b: %s\n", optarg);
+                flag_b = 1;
                 break;  
 
             default:
@@ -84,11 +79,19 @@ int main(int argc, char *argv[]) {
         }
 
     if (flag_e){
-        if (livro_cifra == NULL)
-            return -1;
+        if (livro_cifra == NULL || arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
+            return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
+
         coleta_dados_texto_fila(livro_cifra, arquivo_chaves, mensagem_saida, mensagem_entrada);
+    } else if (flag_d && flag_c) {
+        if (arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
+            return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
+        
+        // decodifica_mensagem_chaves(arquivo_chaves, mensagem_entrada, mensagem_saida);
+    } else if (flag_d && flag_b) {
+        if (livro_cifra == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
+            return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
     }
-    else if (flag_d)
 
     // while (argv[argv_counter]){
     //     if (argv[argv_counter][0] == '-') {

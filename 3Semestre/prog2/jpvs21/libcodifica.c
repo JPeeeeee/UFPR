@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
 #include "libcodifica.h"
+
 
 
 
@@ -36,14 +39,12 @@ fila_t *cria_lista(FILE *LivroCifra){
 		primeira_letra = palavra[0];
 
 		if (p == 0){
-			printf("palavra eh: %s\n", palavra);
-			primeira_letra = palavra[3];
-			printf("a primeira letra eh: %c\n", primeira_letra);
+			primeira_letra = palavra[3]; // ????????????
 		}
 
 		primeira_letra = tolower(primeira_letra);
 
-		if (primeira_letra >= 97 && primeira_letra <= 122)
+		if (primeira_letra <= 127)
 			insere_fila(f, primeira_letra, p);
 
 		p++;		
@@ -55,39 +56,37 @@ fila_t *cria_lista(FILE *LivroCifra){
 void codifica_mensagem(fila_t *f, FILE *MensagemEntrada, FILE *MensagemSaida) {
 	printf("Codificando Mensagem...\n");
 
-	int p = 0;
-	char palavra[BUFF];
+	time_t t;
+	srand((unsigned) time(&t));
 
+	char letra;
 	nodo_f_t *nodo_resultante;
-	while (fscanf(MensagemEntrada, "%s", palavra) != EOF) {
-		char primeira_letra;
-		printf("palavra eh: %s\n", palavra);
-		primeira_letra = palavra[0];
 
-		primeira_letra = tolower(primeira_letra);
-		printf("a primeira letra eh: %c\n", primeira_letra);
+	while ((letra = fgetc(MensagemEntrada)) != EOF) {
+		if (letra <= 127){
+			nodo_resultante = busca_fila(f, letra);
 
-		nodo_resultante = busca_fila(f, primeira_letra);
-
-		if (nodo_resultante != NULL)
-			printf("letra do nodo resultante: %c\n", nodo_resultante->letra);
-			
-
-		p++;		
+			if (nodo_resultante != NULL){
+				fprintf(MensagemSaida, "%d ", nodo_resultante->chaves[rand() % nodo_resultante->tamanho]);
+			} else if (nodo_resultante == NULL && letra != ' ') {
+				printf("ERRO! Existem letras utilizadas na mensagem de entrada que estao indisponiveis no livro cifra!\n");
+				return;
+			}
+		}
+		if (letra == ' ')
+			fprintf(MensagemSaida, "-1 ");
 	}
+	printf("Mensagem codificada!\n");
 }
 
 void coleta_dados_texto_fila (FILE *LivroCifra, FILE *ArquivoChaves, FILE *MensagemSaida, FILE *MensagemEntrada) {
-	if ((ArquivoChaves == NULL) || (LivroCifra == NULL) || (MensagemEntrada == NULL) || (MensagemSaida == NULL))
-		return;
 
 	fila_t *f = cria_lista(LivroCifra);
-
-	printf("\n");
 
 	gera_arquivo_chaves(ArquivoChaves, f);
 	codifica_mensagem(f, MensagemEntrada, MensagemSaida);
 
+	destroi_fila(f);
 	fclose(LivroCifra);
 	fclose(ArquivoChaves);
 	fclose(MensagemEntrada);
