@@ -24,7 +24,7 @@ void gera_arquivo_chaves(FILE *ArquivoChaves, fila_t *f) {
     }
 }
 
-fila_t *cria_lista(FILE *LivroCifra){
+fila_t *cria_lista_encode(FILE *LivroCifra){
 	fila_t *f = cria_fila();
 
 	if (LivroCifra == NULL)
@@ -81,7 +81,7 @@ void codifica_mensagem(fila_t *f, FILE *MensagemEntrada, FILE *MensagemSaida) {
 
 void coleta_dados_texto_fila (FILE *LivroCifra, FILE *ArquivoChaves, FILE *MensagemSaida, FILE *MensagemEntrada) {
 
-	fila_t *f = cria_lista(LivroCifra);
+	fila_t *f = cria_lista_encode(LivroCifra);
 
 	gera_arquivo_chaves(ArquivoChaves, f);
 	codifica_mensagem(f, MensagemEntrada, MensagemSaida);

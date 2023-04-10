@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include "libfila.h"
 #include "libcodifica.h"
+#include "libdecodifica.h"
 #include "libarvore.h"
 
 #define BUFF 255
@@ -36,7 +37,7 @@
 
 int main(int argc, char *argv[]) {
 
-    int option, flag_e, flag_d, flag_c, flag_b;
+    int option, flag_e = 0, flag_d = 0, flag_c = 0, flag_b = 0;
     FILE *livro_cifra = NULL;
     FILE *mensagem_entrada = NULL;
     FILE *arquivo_chaves = NULL;
@@ -65,7 +66,7 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'c':      // option -c was set
-                arquivo_chaves = fopen(optarg, "w");
+                arquivo_chaves = fopen(optarg, "r");
                 flag_c = 1;
                 break;
 
@@ -87,7 +88,7 @@ int main(int argc, char *argv[]) {
         if (arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
         
-        // decodifica_mensagem_chaves(arquivo_chaves, mensagem_entrada, mensagem_saida);
+        decodifica_mensagem_chaves(arquivo_chaves, mensagem_entrada, mensagem_saida);
     } else if (flag_d && flag_b) {
         if (livro_cifra == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
