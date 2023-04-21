@@ -7,8 +7,6 @@
 #include "libcodifica.h"
 
 
-
-
 void gera_arquivo_chaves(FILE *ArquivoChaves, fila_t *f) {
 	nodo_f_t *aux = f->ini;
 

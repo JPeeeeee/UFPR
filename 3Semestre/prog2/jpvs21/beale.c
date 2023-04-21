@@ -6,34 +6,8 @@
 #include "libfila.h"
 #include "libcodifica.h"
 #include "libdecodifica.h"
-#include "libarvore.h"
 
 #define BUFF 255
-
-// nodo_t *coleta_dados_texto_RB(FILE *livro_cifra){
-//     wchar_t palavra[BUFF];
-//     nodo_t *raiz = NULL;
-
-//     int p = 0;
-
-//     fscanf(livro_cifra, "%ls", palavra);
-//     while (fscanf(livro_cifra, "%ls", palavra) != EOF) {
-
-//         wchar_t primeira_letra = palavra[0];
-
-//         if (raiz == NULL){
-//             raiz = inclui_rb(NULL, primeira_letra, p);
-//         }
-//         else{
-//             inclui_rb(raiz, primeira_letra, p);
-//         }
-
-//         p++;		
-//     }
-//     printf("cabou a coleta\n");
-//     return raiz;
-// }
-
 
 int main(int argc, char *argv[]) {
 
@@ -93,64 +67,6 @@ int main(int argc, char *argv[]) {
         if (livro_cifra == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
     }
-
-    // while (argv[argv_counter]){
-    //     if (argv[argv_counter][0] == '-') {
-    //         char letra = argv[argv_counter][1];
-    //         switch (letra) {
-
-    //             // Letra b
-    //             case 98: {
-    //                 printf("letra b\n");
-    //             }
-    //             break;
-
-    //             // Letra c
-    //             case 99: {
-    //                 printf("letra c\n");
-    //             }
-    //             break;
-
-    //             // Letra d
-    //             case 100: {
-    //                 printf("letra d\n");
-    //             }
-    //             break;
-
-    //             // Letra e
-    //             case 101: {
-    //                 // if (argv[argv_counter][1] == 'e') // Perguntar se precisa lidar com acentos e letras maiusculas e se a ordem de execucao do programa tem que ser sempre com os parametros na mesma ordem 
-
-    //                 //     break;
-    //                 f = coleta_dados_texto_fila(argv[argv_counter + 1]);
-    //             }
-    //             break;
-
-    //             // Letra i
-    //             case 105: {
-    //                 printf("letra i\n");
-    //             }
-    //             break;
-
-    //             // Letra m
-    //             case 109: {
-    //                 printf("letra m\n");
-    //             }
-    //             break;
-
-    //             // Letra o
-    //             case 111: {
-    //                 printf("letra o\n");
-    //             }
-    //             break;
-
-    //             default:
-    //                 break;
-    //         }
-    //     }
-    //     argv_counter++;
-    // }
-
 
     setlocale(LC_ALL,"");
 
