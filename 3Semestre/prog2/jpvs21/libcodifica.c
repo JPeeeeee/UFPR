@@ -61,13 +61,16 @@ void codifica_mensagem(fila_t *f, FILE *MensagemEntrada, FILE *MensagemSaida) {
 	nodo_f_t *nodo_resultante;
 
 	while ((letra = fgetc(MensagemEntrada)) != EOF) {
+
+		letra = tolower(letra);
+
 		if (letra <= 127){
 			nodo_resultante = busca_fila(f, letra);
 
 			if (nodo_resultante != NULL){
 				fprintf(MensagemSaida, "%d ", nodo_resultante->chaves[rand() % nodo_resultante->tamanho]);
 			} else if (nodo_resultante == NULL && letra != ' ') {
-				printf("ERRO! Existem letras utilizadas na mensagem de entrada que estao indisponiveis no livro cifra!\n");
+				printf("ERRO! a letra '%c' utilizada na mensagem de entrada esta indisponivel no livro cifra!\n", letra);
 				return;
 			}
 		}

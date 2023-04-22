@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'c':      // option -c was set
-                arquivo_chaves = fopen(optarg, "r");
+                arquivo_chaves = fopen(optarg, "w");
                 flag_c = 1;
                 break;
 
