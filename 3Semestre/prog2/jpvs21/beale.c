@@ -19,32 +19,32 @@ int main(int argc, char *argv[]) {
 
     while ((option = getopt (argc, argv, "edb:m:o:i:c:")) != -1)
         switch (option) {
-            case 'e':      // option -e was set
+            case 'e':      // opcao enconde
                 flag_e = 1;
                 break;
 
             case 'd':   
-                flag_d = 1;   // option -d was set
+                flag_d = 1;   // opcao decode
                 break;
 
-            case 'o':      // option -o was set
+            case 'o':      // nome do arquivo de mensagem de saida
                 mensagem_saida = fopen(optarg, "w");
                 break;
 
-            case 'm':      // option -m was set
+            case 'm':      // nome do arquivo de mensagem original
                 mensagem_entrada = fopen(optarg, "r");
                 break;
 
-            case 'i':      // option -i was set
+            case 'i':      // nome do arquivo de mensagem original
                 mensagem_entrada = fopen(optarg, "r");
                 break;
 
-            case 'c':      // option -c was set
+            case 'c':      // nome do arquivo de chaves
                 arquivo_chaves = fopen(optarg, "w");
                 flag_c = 1;
                 break;
 
-            case 'b':      // option -b was set
+            case 'b':      // nome do livro cifra
                 livro_cifra = fopen(optarg, "r");
                 flag_b = 1;
                 break;  

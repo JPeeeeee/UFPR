@@ -87,6 +87,7 @@ void coleta_dados_texto_fila (FILE *LivroCifra, FILE *ArquivoChaves, FILE *Mensa
 	gera_arquivo_chaves(ArquivoChaves, f);
 	codifica_mensagem(f, MensagemEntrada, MensagemSaida);
 
+
 	destroi_fila(f);
 	fclose(LivroCifra);
 	fclose(ArquivoChaves);

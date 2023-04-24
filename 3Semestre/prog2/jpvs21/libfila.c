@@ -123,7 +123,7 @@ int fila_vazia (fila_t* f) {
 
 fila_t* destroi_fila (fila_t* f) {
 
-    while(f->tamanho > 0)
+    while(tamanho_fila(f) > 0)
         retira_fila(f);
 
     free(f);
