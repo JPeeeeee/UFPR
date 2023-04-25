@@ -1,29 +1,38 @@
 #include <stdio.h>
 #include "libdecodifica.h"
 
-fila_t *cria_lista_decode(FILE *ArquivoChaves) { // Descobrir como ler int diferente de char e ler linha ate \n dinamicamente ler linha por linha
-    fila_t *f = cria_fila();
-    char letra;
-    char *chave = NULL;
+char encontra_letra(FILE *ArquivoChaves, int chave_letra_requerida) { 
+    char letra, espaco;
+    int numero;
 
-    while ((letra = fgetc(ArquivoChaves)) != EOF) {
-		if (letra == '\n'){
-            chave++;
-		} else if (letra == ':') {
-            fscanf(ArquivoChaves, "%[^\n]s", chave);
-                printf("chaves = %s\n", chave); // rever aqui
+    while (fscanf(ArquivoChaves, "%c:", &letra) != EOF) {
+
+		espaco = fgetc(ArquivoChaves);
+        fscanf(ArquivoChaves, "%d", &numero);
+
+        while (espaco != '\n') {
+
+            if (chave_letra_requerida == numero)
+                return letra;
+
+            fscanf(ArquivoChaves, "%d", &numero);
+            espaco = fgetc(ArquivoChaves);
         }
 	}
 
-    return f;
-}
-
-char busca_letra(FILE *ArquivoChaves, fila_t *f) {
-    char letra = '\0';
-    return letra;
+    return ' ';
 }
 
 void decodifica_mensagem_chaves(FILE *ArquivoChaves, FILE *MensagemSaida, FILE *MensagemEntrada) {
-    cria_lista_decode(ArquivoChaves);
+
+    int chave_letra_codificada;
+
+    while (fscanf(MensagemEntrada, "%d", &chave_letra_codificada) != EOF) {
+        if (chave_letra_codificada == -1)
+            fprintf(MensagemSaida, " ");
+        else
+            fprintf(MensagemSaida, "%c", encontra_letra(ArquivoChaves, chave_letra_codificada));
+    }
+
     return;
 }

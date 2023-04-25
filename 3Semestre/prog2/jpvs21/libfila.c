@@ -91,7 +91,7 @@ char retira_fila (fila_t* f) {
     if (tamanho_fila(f) == 1){
         elemento = f->fim->letra;
         free(f->fim->chaves);
-        f->fim = NULL;
+        free(f->fim);
         f->tamanho--;
         return elemento;
     }
