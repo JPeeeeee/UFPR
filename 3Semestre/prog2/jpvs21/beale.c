@@ -17,6 +17,8 @@ int main(int argc, char *argv[]) {
     FILE *arquivo_chaves = NULL;
     FILE *mensagem_saida = NULL;
 
+    char *nomeArquivoChaves;
+
     while ((option = getopt (argc, argv, "edb:m:o:i:c:")) != -1)
         switch (option) {
             case 'e':      // opcao enconde
@@ -40,8 +42,11 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'c':      // nome do arquivo de chaves
-                arquivo_chaves = fopen(optarg, "w");
-                flag_c = 1;
+                nomeArquivoChaves = malloc(strlen(optarg));
+                if (nomeArquivoChaves != NULL){
+                    nomeArquivoChaves = optarg;
+                    flag_c = 1;
+                }
                 break;
 
             case 'b':      // nome do livro cifra
@@ -54,18 +59,25 @@ int main(int argc, char *argv[]) {
         }
 
     if (flag_e){
+        arquivo_chaves = fopen(nomeArquivoChaves, "w");
+
         if (livro_cifra == NULL || arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
 
         coleta_dados_texto_fila(livro_cifra, arquivo_chaves, mensagem_saida, mensagem_entrada);
     } else if (flag_d && flag_c) {
+        arquivo_chaves = fopen(nomeArquivoChaves, "r");
+
         if (arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
         
-        decodifica_mensagem_chaves(arquivo_chaves, mensagem_entrada, mensagem_saida);
+        decodifica_mensagem_chaves(arquivo_chaves, mensagem_saida, mensagem_entrada);
     } else if (flag_d && flag_b) {
         if (livro_cifra == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
+        decodifica_mensagem_livro(livro_cifra, mensagem_saida, mensagem_entrada);
+    } else {
+        return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
     }
 
     setlocale(LC_ALL,"");

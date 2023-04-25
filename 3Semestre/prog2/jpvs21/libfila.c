@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <wchar.h>
 #include "libfila.h"
 
 fila_t* cria_fila () {
