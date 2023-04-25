@@ -42,6 +42,10 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'c':      // nome do arquivo de chaves
+
+                // guarda o nome do arquivo de chaves na variavel nomeArquivoChaves
+                // o arquivo nao eh aberto agora pois dependendo da opcao escolhida ele pode ser aberto em modo read ou write
+
                 nomeArquivoChaves = malloc(strlen(optarg));
                 if (nomeArquivoChaves != NULL){
                     nomeArquivoChaves = optarg;
@@ -58,25 +62,32 @@ int main(int argc, char *argv[]) {
                 break;
         }
 
+    // opcao encode selecionada
     if (flag_e){
+
+        // abre arquivo de chaves em modo write
         arquivo_chaves = fopen(nomeArquivoChaves, "w");
 
         if (livro_cifra == NULL || arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
 
         coleta_dados_texto_fila(livro_cifra, arquivo_chaves, mensagem_saida, mensagem_entrada);
-    } else if (flag_d && flag_c) {
+
+    } else if (flag_d && flag_c) { // opcao decode com arquivo de chaves
+
+        // abre arquivo de chaves em modo read
         arquivo_chaves = fopen(nomeArquivoChaves, "r");
 
         if (arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
         
         decodifica_mensagem_chaves(arquivo_chaves, mensagem_saida, mensagem_entrada);
-    } else if (flag_d && flag_b) {
+
+    } else if (flag_d && flag_b) { // opcao decode com livro de chaves
         if (livro_cifra == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
         decodifica_mensagem_livro(livro_cifra, mensagem_saida, mensagem_entrada);
-    } else {
+    } else { // erro na chamada do programa
         return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
     }
 
