@@ -4,9 +4,12 @@
 #include <string.h>
 #include "libarquivochaves.h"
 
+
+// funcao que gera o arquivo de chaves
 void gera_arquivo_chaves(FILE *ArquivoChaves, fila_t *f) {
 	nodo_f_t *aux = f->ini;
 
+	// itera por toda a lista e printa a letra e chaves de cada nodo
     for (int i = 0; i < tamanho_fila(f); i++){
         fprintf(ArquivoChaves, "%c:", aux->letra);
 
@@ -19,6 +22,7 @@ void gera_arquivo_chaves(FILE *ArquivoChaves, fila_t *f) {
     }
 }
 
+// cria a estrutura lista 
 fila_t *cria_lista_encode(FILE *LivroCifra){
 	fila_t *f = cria_fila();
 
@@ -26,8 +30,9 @@ fila_t *cria_lista_encode(FILE *LivroCifra){
 		return NULL;
 
 	char palavra[BUFF];
-
 	int p = 0;
+
+	// le cada uma das letras do livro cifra e insere a primeira letra na estrutura fila
 	while (fscanf(LivroCifra, "%s", palavra) != EOF) { 
 		char primeira_letra;
 

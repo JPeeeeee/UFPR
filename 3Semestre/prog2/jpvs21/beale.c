@@ -84,12 +84,15 @@ int main(int argc, char *argv[]) {
         decodifica_mensagem_chaves(arquivo_chaves, mensagem_saida, mensagem_entrada);
 
     } else if (flag_d && flag_b) { // opcao decode com livro de chaves
+
         if (livro_cifra == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
+
         decodifica_mensagem_livro(livro_cifra, mensagem_saida, mensagem_entrada);
-    } else { // erro na chamada do programa
+
+    } else  // erro nos argumentos na chamada do programa
         return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
-    }
+    
 
     setlocale(LC_ALL,"");
 
