@@ -32,13 +32,15 @@ void codifica_mensagem(fila_t *f, FILE *MensagemEntrada, FILE *MensagemSaida) {
 
 				// escolhe uma chave aleatoria do vetor de chaves presente no nodo e insere ela na mensagem final
 				fprintf(MensagemSaida, " %d", nodo_resultante->chaves[rand() % nodo_resultante->tamanho]);
-			} else if (nodo_resultante == NULL && letra != ' ') {
+			} else if (nodo_resultante == NULL && letra != ' ' && letra != '\n') {
 				printf("ERRO! a letra '%c' utilizada na mensagem de entrada esta indisponivel no livro cifra!\n", letra);
 				return;
 			}
 		}
 		if (letra == ' ')
 			fprintf(MensagemSaida, " -1");
+		else if (letra == '\n')
+			fprintf(MensagemSaida, " -2");
 	}
 	printf("Mensagem codificada!\n");
 }
@@ -52,6 +54,7 @@ void coleta_dados_texto_fila (FILE *LivroCifra, FILE *ArquivoChaves, FILE *Mensa
 	codifica_mensagem(f, MensagemEntrada, MensagemSaida);
 
 	destroi_fila(f);
+	
 	fclose(LivroCifra);
 	fclose(ArquivoChaves);
 	fclose(MensagemEntrada);

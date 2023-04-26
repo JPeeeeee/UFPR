@@ -34,20 +34,23 @@ fila_t *cria_lista_encode(FILE *LivroCifra){
 
 	// le cada uma das letras do livro cifra e insere a primeira letra na estrutura fila
 	while (fscanf(LivroCifra, "%s", palavra) != EOF) { 
+
 		char primeira_letra;
 
 		primeira_letra = palavra[0];
 
-		if (p == 0){
-			primeira_letra = palavra[3]; // ????????????
-		}
+		// Para caso de um arquivo convertido para UTF-8, por exemplo, desconsidera os primeiros caracteres que avisam da conversão
+		// if (p == 0){
+		// 	primeira_letra = palavra[3];
+		// }
 
 		primeira_letra = tolower(primeira_letra);
 
 		if (primeira_letra <= 127)
 			insere_fila(f, primeira_letra, p);
 
-		p++;		
+		p++;
+				
 	}
 
 	return f;

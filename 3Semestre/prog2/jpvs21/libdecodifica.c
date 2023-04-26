@@ -32,6 +32,8 @@ void decodifica_mensagem_chaves(FILE *ArquivoChaves, FILE *MensagemSaida, FILE *
     while (fscanf(MensagemEntrada, "%d", &chave_letra_codificada) != EOF) {
         if (chave_letra_codificada == -1)
             fprintf(MensagemSaida, " ");
+        else if (chave_letra_codificada == -2)
+            fprintf(MensagemSaida, "\n");
         else {
             letra_resultante = encontra_letra_arquivo_chaves(ArquivoChaves, chave_letra_codificada);
             fprintf(MensagemSaida, "%c", letra_resultante);
@@ -82,6 +84,8 @@ void decodifica_mensagem_livro (FILE *LivroCifra, FILE *MensagemSaida, FILE *Men
             fprintf(MensagemSaida, "%c", letra_resultante);
         }
     }
+
+    destroi_fila(f);
 
     fclose(LivroCifra);
     fclose(MensagemEntrada);

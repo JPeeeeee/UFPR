@@ -22,23 +22,33 @@ int main(int argc, char *argv[]) {
     while ((option = getopt (argc, argv, "edb:m:o:i:c:")) != -1)
         switch (option) {
             case 'e':      // opcao enconde
+
                 flag_e = 1;
+                
                 break;
 
             case 'd':   
+
                 flag_d = 1;   // opcao decode
+
                 break;
 
             case 'o':      // nome do arquivo de mensagem de saida
+
                 mensagem_saida = fopen(optarg, "w");
+
                 break;
 
             case 'm':      // nome do arquivo de mensagem original
+
                 mensagem_entrada = fopen(optarg, "r");
+
                 break;
 
             case 'i':      // nome do arquivo de mensagem original
+
                 mensagem_entrada = fopen(optarg, "r");
+
                 break;
 
             case 'c':      // nome do arquivo de chaves
@@ -46,16 +56,16 @@ int main(int argc, char *argv[]) {
                 // guarda o nome do arquivo de chaves na variavel nomeArquivoChaves
                 // o arquivo nao eh aberto agora pois dependendo da opcao escolhida ele pode ser aberto em modo read ou write
 
-                nomeArquivoChaves = malloc(strlen(optarg));
-                if (nomeArquivoChaves != NULL){
-                    nomeArquivoChaves = optarg;
-                    flag_c = 1;
-                }
+                nomeArquivoChaves = optarg;
+                flag_c = 1;
+
                 break;
 
             case 'b':      // nome do livro cifra
+
                 livro_cifra = fopen(optarg, "r");
                 flag_b = 1;
+
                 break;  
 
             default:
