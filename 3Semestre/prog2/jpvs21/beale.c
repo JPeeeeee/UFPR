@@ -9,6 +9,17 @@
 
 #define BUFF 255
 
+void close_files(FILE *livro_cifra, FILE *mensagem_entrada, FILE *mensagem_saida, FILE *arquivo_chaves) {
+    if (livro_cifra)
+        fclose(livro_cifra);
+    if (mensagem_entrada)
+        fclose(mensagem_entrada);
+    if (arquivo_chaves)
+        fclose(arquivo_chaves);
+    if (mensagem_saida)
+        fclose(mensagem_saida);
+}
+
 int main(int argc, char *argv[]) {
 
     int option, flag_e = 0, flag_d = 0, flag_c = 0, flag_b = 0;
@@ -78,8 +89,10 @@ int main(int argc, char *argv[]) {
         // abre arquivo de chaves em modo write
         arquivo_chaves = fopen(nomeArquivoChaves, "w");
 
-        if (livro_cifra == NULL || arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
+        if (livro_cifra == NULL || arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL){
+            close_files(livro_cifra, mensagem_entrada, mensagem_saida, arquivo_chaves);
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
+        }
 
         coleta_dados_texto_fila(livro_cifra, arquivo_chaves, mensagem_saida, mensagem_entrada);
 
@@ -88,29 +101,26 @@ int main(int argc, char *argv[]) {
         // abre arquivo de chaves em modo read
         arquivo_chaves = fopen(nomeArquivoChaves, "r");
 
-        if (arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
+        if (arquivo_chaves == NULL || mensagem_saida == NULL || mensagem_entrada == NULL){
+            close_files(livro_cifra, mensagem_entrada, mensagem_saida, arquivo_chaves);
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
+        }
         
         decodifica_mensagem_chaves(arquivo_chaves, mensagem_saida, mensagem_entrada);
 
     } else if (flag_d && flag_b && !flag_c) { // opcao decode com livro de chaves
 
-        if (livro_cifra == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
+        if (livro_cifra == NULL || mensagem_saida == NULL || mensagem_entrada == NULL){
+            close_files(livro_cifra, mensagem_entrada, mensagem_saida, arquivo_chaves);
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
+        }
 
         decodifica_mensagem_livro(livro_cifra, mensagem_saida, mensagem_entrada);
 
     } else { // erro nos argumentos na chamada do programa
 
-        if (livro_cifra)
-            fclose(livro_cifra);
-        if (mensagem_entrada)
-            fclose(mensagem_entrada);
-        if (arquivo_chaves)
-            fclose(arquivo_chaves);
-        if (mensagem_saida)
-            fclose(mensagem_saida);
-            
+        close_files(livro_cifra, mensagem_entrada, mensagem_saida, arquivo_chaves);
+
         printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
         return -1;
     } 
