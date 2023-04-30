@@ -30,25 +30,40 @@ nodo_f_t *busca_fila (fila_t *f, char c) {
 
 int adiciona_chave (fila_t *f, char c, int chave) {
 
-    nodo_f_t *aux = f->ini;
+    // aux recebe o nodo com letra 'char c'
+    nodo_f_t *aux = busca_fila(f, c);
 
-    while (aux->letra != c) {
-        aux = aux->prox;
-    }
+    if (aux == NULL)
+        return 0;
 
-    if (aux->chaves == NULL){
-        aux->chaves = malloc(sizeof(int));
-        aux->chaves[0] = chave;
-        aux->tamanho++;
-        return 1;
-    } else{
-        aux->tamanho++;
-        aux->chaves = realloc(aux->chaves, sizeof(int) * aux->tamanho);
-        aux->chaves[aux->tamanho - 1] = chave;
-        return 1;
-    }
-    return 0;
+    // o vetor de chaves de aux recebe um realloc de tamanho 
+    aux->tamanho++;
+    aux->chaves = realloc(aux->chaves, sizeof(int) * aux->tamanho);
+    aux->chaves[aux->tamanho - 1] = chave;
+    return 1;
 }
+
+// int adiciona_chave (fila_t *f, char c, int chave) {
+
+//     nodo_f_t *aux = f->ini;
+
+//     while (aux->letra != c) {
+//         aux = aux->prox;
+//     }
+
+//     if (aux->chaves == NULL){
+//         aux->chaves = malloc(sizeof(int));
+//         aux->chaves[0] = chave;
+//         aux->tamanho++;
+//         return 1;
+//     } else{
+//         aux->tamanho++;
+//         aux->chaves = realloc(aux->chaves, sizeof(int) * aux->tamanho);
+//         aux->chaves[aux->tamanho - 1] = chave;
+//         return 1;
+//     }
+//     return 0;
+// }
 
 int insere_fila (fila_t* f, char c, int chave) {
 
