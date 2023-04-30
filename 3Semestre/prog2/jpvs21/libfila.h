@@ -23,6 +23,9 @@ fila_t * cria_fila ();
 // destroia a fila e libera toda a memoria utilizada pela estrutura
 fila_t * destroi_fila (fila_t *f);
 
+// verifica se a fila esta vazia, retorna 1 caso esteja e 0 caso contrario
+int fila_vazia(fila_t *f);
+
 // retorna um inteiro que representa o tamanho da fila
 int tamanho_fila (fila_t *f);
 
@@ -32,5 +35,8 @@ int insere_fila (fila_t *f, char c, int chave);
 
 // busca um nodo de letra c na estrutura fila e retorna um ponteiro para ele
 nodo_f_t *busca_fila (fila_t *f, char c);
+
+
+
 
 #endif
