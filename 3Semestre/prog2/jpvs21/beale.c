@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 
         coleta_dados_texto_fila(livro_cifra, arquivo_chaves, mensagem_saida, mensagem_entrada);
 
-    } else if (flag_d && flag_c) { // opcao decode com arquivo de chaves
+    } else if (flag_d && flag_c && !flag_b) { // opcao decode com arquivo de chaves
 
         // abre arquivo de chaves em modo read
         arquivo_chaves = fopen(nomeArquivoChaves, "r");
@@ -93,16 +93,30 @@ int main(int argc, char *argv[]) {
         
         decodifica_mensagem_chaves(arquivo_chaves, mensagem_saida, mensagem_entrada);
 
-    } else if (flag_d && flag_b) { // opcao decode com livro de chaves
+    } else if (flag_d && flag_b && !flag_c) { // opcao decode com livro de chaves
 
         if (livro_cifra == NULL || mensagem_saida == NULL || mensagem_entrada == NULL)
             return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
 
         decodifica_mensagem_livro(livro_cifra, mensagem_saida, mensagem_entrada);
 
-    } else  // erro nos argumentos na chamada do programa
-        return printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
+    } else { // erro nos argumentos na chamada do programa
+
+        if (livro_cifra)
+            fclose(livro_cifra);
+        if (mensagem_entrada)
+            fclose(mensagem_entrada);
+        if (arquivo_chaves)
+            fclose(arquivo_chaves);
+        if (mensagem_saida)
+            fclose(mensagem_saida);
+            
+        printf("Erro ao abrir um ou mais aquivos! Tente novamente!\n");
+        return -1;
+    } 
+        
     
+
 
     setlocale(LC_ALL,"");
 
