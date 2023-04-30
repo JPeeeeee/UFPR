@@ -125,12 +125,12 @@ int fila_vazia (fila_t* f) {
 
 
 // desaloca cada nodo presente na fila e da free na estrutura
-fila_t* destroi_fila (fila_t* f) {
+void destroi_fila (fila_t* f) {
 
     while(tamanho_fila(f) > 0)
         retira_fila(f);
 
     free(f);
 
-    return NULL;
+    return;
 }

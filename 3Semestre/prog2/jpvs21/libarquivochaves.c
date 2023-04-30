@@ -46,6 +46,7 @@ fila_t *cria_lista_encode(FILE *LivroCifra){
 
 		primeira_letra = tolower(primeira_letra);
 
+		// so insere a letra na fila se ela existir nos 127 valores da tabela ASCII
 		if (primeira_letra <= 127)
 			insere_fila(f, primeira_letra, p);
 

@@ -21,7 +21,7 @@ typedef struct fila fila_t;
 fila_t * cria_fila ();
 
 // destroia a fila e libera toda a memoria utilizada pela estrutura
-fila_t * destroi_fila (fila_t *f);
+void destroi_fila (fila_t *f);
 
 // verifica se a fila esta vazia, retorna 1 caso esteja e 0 caso contrario
 int fila_vazia(fila_t *f);
