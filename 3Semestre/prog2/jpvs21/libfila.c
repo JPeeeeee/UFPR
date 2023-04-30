@@ -30,11 +30,10 @@ nodo_f_t *busca_fila (fila_t *f, char c) {
 
 int adiciona_chave (fila_t *f, char c, int chave) {
 
-    nodo_f_t *aux = f->ini;
+    nodo_f_t *aux = busca_fila(f, c);
 
-    while (aux->letra != c) {
-        aux = aux->prox;
-    }
+    if (aux == NULL)
+        return 0;
 
     if (aux->chaves == NULL){
         aux->chaves = malloc(sizeof(int));
@@ -43,7 +42,7 @@ int adiciona_chave (fila_t *f, char c, int chave) {
         return 1;
     } else{
         aux->tamanho++;
-        aux->chaves = realloc(aux->chaves, sizeof(int) * aux->tamanho);
+        aux->chaves = realloc(aux->chaves, sizeof(int) + aux->tamanho);
         aux->chaves[aux->tamanho - 1] = chave;
         return 1;
     }
@@ -52,6 +51,7 @@ int adiciona_chave (fila_t *f, char c, int chave) {
 
 int insere_fila (fila_t* f, char c, int chave) {
 
+    // caso o valor ja exista na fila, chama a funcao adiciona_chave
     if (busca_fila(f, c)){
         adiciona_chave(f, c, chave);
         return 1;
@@ -62,13 +62,15 @@ int insere_fila (fila_t* f, char c, int chave) {
     if (novo == NULL)
         return 0;
     
+    // inicializa os valores do novo nodo e aloca o tamanho de um unico 
+    // valor int e insere a chave na primeira posicao do vetor
     novo->letra = c;
     novo->prox = NULL;
-    novo->prev = f->fim;
     novo->chaves = malloc(sizeof(int));
     novo->chaves[0] = chave;
     novo->tamanho = 1;
 
+    // reajusta os ponteiros de inicio e fim da fila
     if (fila_vazia(f)){
         f->ini = novo;
         f->fim = novo;

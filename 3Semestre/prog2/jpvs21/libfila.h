@@ -5,7 +5,6 @@
 struct nodo_f {
     char letra;
     struct nodo_f *prox; 
-    struct nodo_f *prev; 
     int *chaves;
     int tamanho;
 };
@@ -18,18 +17,20 @@ struct fila {
 };
 typedef struct fila fila_t;
 
+// retorna um ponteiro para a estrutura fila
 fila_t * cria_fila ();
 
+// destroia a fila e libera toda a memoria utilizada pela estrutura
 fila_t * destroi_fila (fila_t *f);
 
-int fila_vazia (fila_t *f);
-
+// retorna um inteiro que representa o tamanho da fila
 int tamanho_fila (fila_t *f);
 
+// verifica a existencia do char c na fila. Caso ja exista insere a chave no nodo de letra c, caso contrario cria um novo nodo com a letra c e insere a chave
+// retorna 1 se a insercao foi bem sucedida e 0 em caso de falha
 int insere_fila (fila_t *f, char c, int chave);
 
+// busca um nodo de letra c na estrutura fila e retorna um ponteiro para ele
 nodo_f_t *busca_fila (fila_t *f, char c);
-
-char retira_fila (fila_t *f);
 
 #endif
