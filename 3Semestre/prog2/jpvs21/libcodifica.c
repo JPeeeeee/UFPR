@@ -45,7 +45,7 @@ void codifica_mensagem(fila_t *f, FILE *MensagemEntrada, FILE *MensagemSaida) {
 	printf("Mensagem codificada!\n");
 }
 
-// funao que gerencia as tarefas necessarias para criar a mensagem de saida
+// funcao que gerencia as tarefas necessarias para criar a mensagem de saida
 void coleta_dados_texto_fila (FILE *LivroCifra, FILE *ArquivoChaves, FILE *MensagemSaida, FILE *MensagemEntrada) {
 
 	fila_t *f = cria_lista_encode(LivroCifra);
