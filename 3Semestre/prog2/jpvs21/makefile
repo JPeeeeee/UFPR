@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =  -Wall -g
+CFLAGS =  -Wall -g -std=c99
 
 beale: beale.o libfila.o libcodifica.o libdecodifica.o libarquivochaves.o
 	$(CC)  beale.o libfila.o libcodifica.o libdecodifica.o libarquivochaves.o -o beale 
@@ -21,3 +21,6 @@ libarquivochaves.o : libarquivochaves.c
 
 clean :
 	rm -f *.o beale
+
+purge : 
+	rm -f beale
