@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h>
+#include <ctype.h>
 #include <unistd.h>
+#include <getopt.h>
 #include "libfila.h"
 #include "libcodifica.h"
 #include "libdecodifica.h"
