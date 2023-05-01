@@ -23,6 +23,7 @@ void close_files(FILE *livro_cifra, FILE *mensagem_entrada, FILE *mensagem_saida
 int main(int argc, char *argv[]) {
 
     int option, flag_e = 0, flag_d = 0, flag_c = 0, flag_b = 0;
+    
     FILE *livro_cifra = NULL;
     FILE *mensagem_entrada = NULL;
     FILE *arquivo_chaves = NULL;
@@ -38,9 +39,9 @@ int main(int argc, char *argv[]) {
                 
                 break;
 
-            case 'd':   
+            case 'd':      // opcao decode
 
-                flag_d = 1;   // opcao decode
+                flag_d = 1;   
 
                 break;
 
