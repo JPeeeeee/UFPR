@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS =  -Wall -g
 
-vina++: vina++.o libifla.o libmanagefiles.o
-	$(CC) vina++.o libifla.o libmanagefiles.o -o vina++ 
+vina++: vina++.o libfila.o libmanagefiles.o
+	$(CC) vina++.o libfila.o libmanagefiles.o -o vina++ 
 
 vina++.o : vina++.c     
 	$(CC) $(CFLAGS) -c vina++.c
