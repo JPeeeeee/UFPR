@@ -45,6 +45,7 @@ void inclusaoDeArquivo (int argc, char **argumentos) {
         printf("nome do arquivo: %s\n", argumentos[argAtual]);
 
         // printf("tempo da ultima alteracao: %ld\n", (time(0) - info.st_mtimespec.tv_sec) / 60);
+
         transcreveArquivo(arqBackup, argumentos[argAtual]);
     }
 }
