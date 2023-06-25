@@ -65,7 +65,7 @@ void inclusaoDeArquivo (FILE *arqBackup, char *nome, int optA, fila_t *diretorio
         if (!nodoBuscado) {
             transcreveArquivo(arqBackup, nome, diretorio);
             escreveDiretorio(diretorio, arqBackup);
-
+            printf("Arquivo criado no backup!\n");
             rewind(arqBackup);
         } else {
 
@@ -190,6 +190,7 @@ void extraiArquivo(char *nome, FILE *arqBackup, fila_t *f) {
     // cria o arquivo no diretorio atual e seta as permissoes
     FILE *arqTranscrever = fopen(nome, "w");
     chmod(extraido->path, extraido->permissoes);
+    printf("Arquivo extraido em: %s\n", nome);
     if (!arqTranscrever)
         return;
 
