@@ -72,7 +72,7 @@ void inclusaoDeArquivo (FILE *arqBackup, char *nome, int optA, fila_t *diretorio
             struct stat info;
             stat(nome, &info);
 
-            if(info.st_mtimespec.tv_sec > nodoBuscado->dataAlteracao) {
+            if(info.st_mtime > nodoBuscado->dataAlteracao) {
 
                 removeArquivo(nome, arqBackup, diretorio);
                 transcreveArquivo(arqBackup, nome, diretorio);

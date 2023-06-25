@@ -10,7 +10,6 @@
 #include <limits.h>
 #include "libfila.h"
 
-#define PATH_MAX 1024
 
 // 
 fila_t* cria_fila () {
@@ -95,7 +94,7 @@ int insere_fila (fila_t* f, char *name, FILE *arqBackup) {
 
     novo->b_fim = novo->b_ini + info.st_size - 1;
     novo->tam = info.st_size;
-    novo->dataAlteracao = info.st_mtimespec.tv_sec;
+    novo->dataAlteracao = info.st_mtime;
     novo->permissoes = info.st_mode; 
     novo->UID = info.st_uid;
     novo->group = info.st_gid;
