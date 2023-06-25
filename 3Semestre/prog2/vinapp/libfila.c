@@ -1,9 +1,16 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include "libfila.h"
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <grp.h>
+#include <time.h>
 #include <limits.h>
+#include "libfila.h"
 
+#define PATH_MAX 1024
 
 // 
 fila_t* cria_fila () {
@@ -24,10 +31,10 @@ nodo_f_t *busca_fila (fila_t *f, char *name) {
 
     nodo_f_t *aux = f->ini;
     
-    // enquanto aux receber um nodo da fila, compara a letra de aux com a 
-    // letra procurada e, caso sejam iguais, retorna um ponteiro para o nodo atual
+    // enquanto aux receber um nodo da fila, compara a letra de aux com o 
+    // nome procurado e, caso sejam iguais, retorna um ponteiro para o nodo atual
     while (aux != NULL) {
-        if (aux->path == name)
+        if (!strcmp(name, aux->nome))
             return aux;
         aux = aux->prox;
     }
@@ -35,25 +42,15 @@ nodo_f_t *busca_fila (fila_t *f, char *name) {
     return NULL;
 }
 
-int insere_fila (fila_t* f, struct stat info, char *name) {
+// retorna o tamanho de um arquivo
+int tamArquivo(FILE *arqBackup) {
+    struct stat info;
+    fstat(fileno(arqBackup), &info);
+    return info.st_size;
+}
 
-    // caso o valor ja exista na fila retorna 1
-    if (busca_fila(f, name)){
-        return 1;
-    }
-
-    nodo_f_t *novo = malloc(sizeof(nodo_f_t));
-    
-    if (novo == NULL)
-        return 0;
-    
-    // inicializa os valores do novo nodo e aloca o tamanho de um unico 
-    // valor int e insere a chave na primeira posicao do vetor
-    novo->path = name;
-    novo->prox = NULL;
-    stat(name, &novo->info);
-
-    // reajusta os ponteiros de inicio e fim da fila
+// insere um nodo ja criado dentro da fila
+int insere_nodo_fila(fila_t *f, nodo_f_t *novo){
     if (fila_vazia(f)){
         f->ini = novo;
         f->fim = novo;
@@ -68,28 +65,75 @@ int insere_fila (fila_t* f, struct stat info, char *name) {
     }
 }
 
+int insere_fila (fila_t* f, char *name, FILE *arqBackup) {
 
-// funcao que retira o primeiro elemento da fila
-void retira_fila (fila_t* f) {    
+    struct stat info;
 
-    // caso a fila possua apenas um elemento
-    // retira o unico elemento presente
-    if (tamanho_fila(f) == 1){
-        free(f->fim);
-        f->tamanho--;
-        return;
+    stat(name, &info);
+
+    nodo_f_t *novo = malloc(sizeof(nodo_f_t));
+    
+    if (novo == NULL)
+        return 0;
+    
+    // inicializa os valores do novo nodo e aloca o tamanho de um unico 
+    // valor int e insere a chave na primeira posicao do vetor
+    novo->prox = NULL;
+    novo->nome = name;
+    novo->path = realpath(name, novo->path);
+
+    // seta os valores de inicio para caso nao exista nenhum arquivo em backup
+    if (f->fim){
+        if (f->fim->b_fim == 0)
+            novo->b_ini = f->fim->b_fim + 4;
+        else 
+            novo->b_ini = f->fim->b_fim + 1;
+    }
+    else {
+        novo->b_ini = tamArquivo(arqBackup);
     }
 
-    // retira o primeiro elemento da fila e reajusta o ponteiro de inicio da fila
-    if (!fila_vazia(f)){    
-        nodo_f_t *aux = f->ini;
-        f->ini = f->ini->prox;
-        free(aux);
-        f->tamanho--;
-        return;
-    }
+    novo->b_fim = novo->b_ini + info.st_size - 1;
+    novo->tam = info.st_size;
+    novo->dataAlteracao = info.st_mtimespec.tv_sec;
+    novo->permissoes = info.st_mode; 
+    novo->UID = info.st_uid;
+    novo->group = info.st_gid;
+    novo->posicao = tamanho_fila(f) + 1;
 
-    return;
+    // reajusta os ponteiros de inicio e fim da fila
+    if (f->tamanho == 0 || fila_vazia(f)){
+        f->ini = novo;
+        f->fim = novo;
+        f->tamanho++;
+        return 1;
+    } else{
+        nodo_f_t *aux = f->fim;
+        f->fim = novo;
+        aux->prox = f->fim;
+        f->tamanho++;
+        return 1;
+    }
+}
+
+// remove um nodo da fila (o nodo requerido deve ser passado como parametro)
+// e reajusta os ponteiros da fila
+void remove_fila (fila_t *f, nodo_f_t *removido) {
+    nodo_f_t *aux = removido->prox;
+
+    if (!(removido == f->ini)){
+        nodo_f_t *anterior = f->ini;
+
+        while(anterior->prox != removido) 
+            anterior = anterior->prox;
+
+        if (removido == f->fim) 
+            f->fim = anterior;
+
+        anterior->prox = aux;
+    } else 
+        f->ini = aux;
+    f->tamanho -= 1;
 }
 
 // retorna um inteiro com o tamnaho da fila
@@ -106,14 +150,3 @@ int fila_vazia (fila_t* f) {
     return 0;
 }
 
-
-// desaloca cada nodo presente na fila e da free na estrutura
-void destroi_fila (fila_t* f) {
-
-    while(tamanho_fila(f) > 0)
-        retira_fila(f);
-
-    free(f);
-
-    return;
-}

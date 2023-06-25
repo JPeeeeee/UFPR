@@ -3,10 +3,22 @@
 #define fila_h
 
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <grp.h>
+#include <time.h>
 
 struct nodo_f {
+    char *nome;
     char *path;
-    struct stat info;
+    uid_t UID;
+    gid_t group;
+    time_t dataAlteracao;
+    int posicao;
+    off_t tam;
+    int b_ini;
+    int b_fim;
+    mode_t permissoes;
     struct nodo_f *prox;
 };
 typedef struct nodo_f nodo_f_t;
@@ -21,18 +33,21 @@ typedef struct fila fila_t;
 // retorna um ponteiro para a estrutura fila
 fila_t * cria_fila ();
 
-// destroia a fila e libera toda a memoria utilizada pela estrutura
-void destroi_fila (fila_t *f);
-
 // verifica se a fila esta vazia, retorna 1 caso esteja e 0 caso contrario
 int fila_vazia(fila_t *f);
 
 // retorna um inteiro que representa o tamanho da fila
 int tamanho_fila (fila_t *f);
 
-// verifica a existencia do char c na fila. Caso ja exista insere a chave no nodo de letra c, caso contrario cria um novo nodo com a letra c e insere a chave
 // retorna 1 se a insercao foi bem sucedida e 0 em caso de falha
-int insere_fila (fila_t *f, struct stat info, char *name);
+int insere_fila (fila_t *f, char *name, FILE *arqBackup);
+
+// retorna 1 se a insercao foi bem sucedida e 0 em caso de falha
+// diferente da funcao anterior, esta recebe um nodo pronto como parametro
+int insere_nodo_fila(fila_t *f, nodo_f_t *novo);
+
+// remove um nodo da fila
+void remove_fila (fila_t *f, nodo_f_t *removido);
 
 // busca um nodo de letra c na estrutura fila e retorna um ponteiro para ele
 nodo_f_t *busca_fila (fila_t *f, char *name);
