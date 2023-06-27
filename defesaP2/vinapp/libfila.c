@@ -98,16 +98,18 @@ int insere_fila (fila_t* f, char *name, FILE *arqBackup, struct stat info) {
     novo->posicao = tamanho_fila(f) + 1;
 
     // reajusta os ponteiros de inicio e fim da fila
-    if (f->tamanho == 0 || fila_vazia(f)){
+    if (f->tamanho == 0){
         f->ini = novo;
         f->fim = novo;
         f->tamanho++;
+
         return 1;
     } else{
         nodo_f_t *aux = f->fim;
         f->fim = novo;
         aux->prox = f->fim;
         f->tamanho++;
+
         return 1;
     }
 }

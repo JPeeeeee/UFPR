@@ -90,8 +90,9 @@ void inclusaoDeArquivo (FILE *arqBackup, char *nome, int optA, fila_t *diretorio
         if (!nodoBuscado) {
             transcreveArquivo(arqBackup, nome, diretorio); 
             escreveDiretorio(diretorio, arqBackup);
-
             printf("Arquivo inserido com sucesso!\n");
+
+            // rodar com gdb watch f->ini do arquivo main
         }
         else 
             printf("Arquivo ja se encontra no backup\n"); 
