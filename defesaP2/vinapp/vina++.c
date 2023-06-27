@@ -42,7 +42,8 @@ int main(int argc, char *argv[]) {
                     char newName[strlen(argv[argCount]) + 2];
                     strcpy(newName, "./");
                     strncat(newName, argv[argCount], strlen(argv[argCount])); 
-                    inclusaoDeArquivo(arqBackup, newName, 0, diretorio);
+                    strncat(newName, "\0", strlen(argv[argCount]) + 1); 
+                    inclusaoDeArquivo(arqBackup, argv[argCount], 0, diretorio);
                 }
                 if (fila_vazia(diretorio))
                     return -1;

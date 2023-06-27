@@ -38,6 +38,7 @@ void transcreveArquivo (FILE *arqBackup, char *arquivo, fila_t* diretorio) {
     // insere uma estrutura de dados com as informacoes do novo arquivo no diretorio
     insere_fila(diretorio, arquivo, arqBackup, info);
 
+
     for (int i = 0; i < nLeituras; i++){
         fread(buffer, 1, BUFF, arqTranscrever);
         fwrite(buffer, 1, BUFF, arqBackup);
@@ -54,9 +55,11 @@ void transcreveArquivo (FILE *arqBackup, char *arquivo, fila_t* diretorio) {
 
 void inclusaoDeArquivo (FILE *arqBackup, char *nome, int optA, fila_t *diretorio) { 
 
-
     // verifica se o arquivo ja existe no backup
+
     nodo_f_t *nodoBuscado = busca_fila(diretorio, nome);
+
+
 
     // verifica se a opcao de atualizar foi selecionada
     if(optA) {
@@ -91,8 +94,7 @@ void inclusaoDeArquivo (FILE *arqBackup, char *nome, int optA, fila_t *diretorio
             transcreveArquivo(arqBackup, nome, diretorio); 
             escreveDiretorio(diretorio, arqBackup);
             printf("Arquivo inserido com sucesso!\n");
-
-            // rodar com gdb watch f->ini do arquivo main
+            // rodar com gdb watch f->ini do arquivo main    
         }
         else 
             printf("Arquivo ja se encontra no backup\n"); 

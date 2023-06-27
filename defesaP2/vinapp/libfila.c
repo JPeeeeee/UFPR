@@ -30,10 +30,12 @@ fila_t* cria_fila () {
 nodo_f_t *busca_fila (fila_t *f, char *name) {
 
     nodo_f_t *aux = f->ini;
+
     // enquanto aux receber um nodo da fila, compara a letra de aux com o 
     // nome procurado e, caso sejam iguais, retorna um ponteiro para o nodo atual
-    while (aux != NULL) {
-        if ((strcmp(name, aux->nome) != 0)){
+    while (aux != NULL) {    
+
+        if (!strcmp(name, aux->nome)){
             return aux;
         }
         aux = aux->prox;

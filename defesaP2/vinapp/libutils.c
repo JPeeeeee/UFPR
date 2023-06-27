@@ -46,7 +46,7 @@ void imprimeDiretorio(fila_t *f) {
         struct passwd *pw = getpwuid(novo->UID);
         struct group *gr = getgrgid(novo->group);
         output_permissions(novo->permissoes);
-        printf("%s %s %8ld %s %s\n", pw->pw_name, gr->gr_name, novo->tam, time, novo->nome);
+        printf(" %s %s %8ld %s %s\n", pw->pw_name, gr->gr_name, novo->tam, time, novo->nome);
         novo = novo->prox;
     }
     printf("\n");
