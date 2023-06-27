@@ -33,7 +33,7 @@ nodo_f_t *busca_fila (fila_t *f, char *name) {
     // enquanto aux receber um nodo da fila, compara a letra de aux com o 
     // nome procurado e, caso sejam iguais, retorna um ponteiro para o nodo atual
     while (aux != NULL) {
-        if (strcmp(name, aux->nome) != 0){
+        if ((strcmp(name, aux->nome) != 0)){
             return aux;
         }
         aux = aux->prox;
@@ -76,7 +76,7 @@ int insere_fila (fila_t* f, char *name, FILE *arqBackup, struct stat info) {
     // valor int e insere a chave na primeira posicao do vetor
     novo->prox = NULL;
     novo->nome = name;
-    novo->path = "fhjaklsdhfkljasd";
+    novo->path = name;
 
     // seta os valores de inicio para caso nao exista nenhum arquivo em backup
     if (f->fim){
