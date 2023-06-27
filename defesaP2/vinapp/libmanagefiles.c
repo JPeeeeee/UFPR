@@ -36,7 +36,9 @@ void transcreveArquivo (FILE *arqBackup, char *arquivo, fila_t* diretorio) {
     }
 
     // insere uma estrutura de dados com as informacoes do novo arquivo no diretorio
-    insere_fila(diretorio, arquivo, arqBackup);
+    printf("nome do arquivo inserido na fila: %s\n", arquivo);
+    insere_fila(diretorio, arquivo, arqBackup, info);
+    printf("nome do arquivo no diretorio: %s\n", diretorio->fim->nome);
 
     for (int i = 0; i < nLeituras; i++){
         fread(buffer, 1, BUFF, arqTranscrever);
@@ -53,6 +55,8 @@ void transcreveArquivo (FILE *arqBackup, char *arquivo, fila_t* diretorio) {
 }
 
 void inclusaoDeArquivo (FILE *arqBackup, char *nome, int optA, fila_t *diretorio) { 
+
+
     // verifica se o arquivo ja existe no backup
     nodo_f_t *nodoBuscado = busca_fila(diretorio, nome);
 
@@ -84,9 +88,12 @@ void inclusaoDeArquivo (FILE *arqBackup, char *nome, int optA, fila_t *diretorio
             }
         }
     } else { // funcao insere normal
+
         if (!nodoBuscado) {
             transcreveArquivo(arqBackup, nome, diretorio); 
             escreveDiretorio(diretorio, arqBackup);
+            printf("nome do primeiro arquivo no diretorio: %s\n", diretorio->ini->nome);
+            printf("nome do ultimo arquivo no diretorio: %s\n", diretorio->fim->nome);
 
             printf("Arquivo inserido com sucesso!\n");
         }

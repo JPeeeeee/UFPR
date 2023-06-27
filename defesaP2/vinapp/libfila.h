@@ -40,7 +40,7 @@ int fila_vazia(fila_t *f);
 int tamanho_fila (fila_t *f);
 
 // retorna 1 se a insercao foi bem sucedida e 0 em caso de falha
-int insere_fila (fila_t *f, char *name, FILE *arqBackup);
+int insere_fila (fila_t *f, char *name, FILE *arqBackup, struct stat info);
 
 // retorna 1 se a insercao foi bem sucedida e 0 em caso de falha
 // diferente da funcao anterior, esta recebe um nodo pronto como parametro

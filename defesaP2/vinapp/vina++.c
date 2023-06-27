@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include <grp.h>
 #include <pwd.h>
 #include "libmanagefiles.h"
@@ -35,8 +36,14 @@ int main(int argc, char *argv[]) {
                 } else {
                     leDiretorio(diretorio, arqBackup);
                 }
-                for (argCount = 3; argCount < argc; argCount++)
-                    inclusaoDeArquivo(arqBackup, argv[argCount], 0, diretorio);
+
+
+                for (argCount = 3; argCount < argc; argCount++) {
+                    char newName[strlen(argv[argCount]) + 2];
+                    strcpy(newName, "./");
+                    strncat(newName, argv[argCount], strlen(argv[argCount])); 
+                    inclusaoDeArquivo(arqBackup, newName, 0, diretorio);
+                }
                 if (fila_vazia(diretorio))
                     return -1;
                 free(diretorio);
@@ -57,8 +64,13 @@ int main(int argc, char *argv[]) {
                     leDiretorio(diretorio, arqBackup);
                 }
 
-                for (argCount = 3; argCount < argc; argCount++)
-                    inclusaoDeArquivo(arqBackup, argv[argCount], 1, diretorio);
+                for (argCount = 3; argCount < argc; argCount++) {
+                    char newName[strlen(argv[argCount]) + 2];
+                    strcpy(newName, "./");
+                    strncat(newName, argv[argCount], strlen(argv[argCount])); 
+                    inclusaoDeArquivo(arqBackup, newName, 0, diretorio);
+                }
+
                 if (fila_vazia(diretorio)){
                     printf("diretorio vazio\n");
                     return -1;

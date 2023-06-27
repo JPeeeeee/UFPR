@@ -10,6 +10,7 @@
 #include <limits.h>
 #include "libfila.h"
 
+#define MAXPATH 1024
 
 // 
 fila_t* cria_fila () {
@@ -29,12 +30,12 @@ fila_t* cria_fila () {
 nodo_f_t *busca_fila (fila_t *f, char *name) {
 
     nodo_f_t *aux = f->ini;
-    
     // enquanto aux receber um nodo da fila, compara a letra de aux com o 
     // nome procurado e, caso sejam iguais, retorna um ponteiro para o nodo atual
     while (aux != NULL) {
-        if (!strcmp(name, aux->nome))
+        if (strcmp(name, aux->nome) != 0){
             return aux;
+        }
         aux = aux->prox;
     }
 
@@ -64,11 +65,7 @@ int insere_nodo_fila(fila_t *f, nodo_f_t *novo){
     }
 }
 
-int insere_fila (fila_t* f, char *name, FILE *arqBackup) {
-
-    struct stat info;
-
-    stat(name, &info);
+int insere_fila (fila_t* f, char *name, FILE *arqBackup, struct stat info) {
 
     nodo_f_t *novo = malloc(sizeof(nodo_f_t));
     
@@ -79,7 +76,7 @@ int insere_fila (fila_t* f, char *name, FILE *arqBackup) {
     // valor int e insere a chave na primeira posicao do vetor
     novo->prox = NULL;
     novo->nome = name;
-    novo->path = realpath(name, novo->path);
+    novo->path = "fhjaklsdhfkljasd";
 
     // seta os valores de inicio para caso nao exista nenhum arquivo em backup
     if (f->fim){
