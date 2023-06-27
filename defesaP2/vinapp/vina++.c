@@ -38,11 +38,7 @@ int main(int argc, char *argv[]) {
                 }
 
 
-                for (argCount = 3; argCount < argc; argCount++) {
-                    char newName[strlen(argv[argCount]) + 2];
-                    strcpy(newName, "./");
-                    strncat(newName, argv[argCount], strlen(argv[argCount])); 
-                    strncat(newName, "\0", strlen(argv[argCount]) + 1); 
+                for (argCount = 3; argCount < argc; argCount++) { 
                     inclusaoDeArquivo(arqBackup, argv[argCount], 0, diretorio);
                 }
                 if (fila_vazia(diretorio))
@@ -65,11 +61,8 @@ int main(int argc, char *argv[]) {
                     leDiretorio(diretorio, arqBackup);
                 }
 
-                for (argCount = 3; argCount < argc; argCount++) {
-                    char newName[strlen(argv[argCount]) + 2];
-                    strcpy(newName, "./");
-                    strncat(newName, argv[argCount], strlen(argv[argCount])); 
-                    inclusaoDeArquivo(arqBackup, newName, 0, diretorio);
+                for (argCount = 3; argCount < argc; argCount++) { 
+                    inclusaoDeArquivo(arqBackup, argv[argCount], 0, diretorio);
                 }
 
                 if (fila_vazia(diretorio)){
