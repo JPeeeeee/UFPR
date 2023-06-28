@@ -53,13 +53,13 @@ void transcreveArquivo (FILE *arqBackup, char *arquivo, fila_t* diretorio) {
     fclose(arqTranscrever);
 }
 
+
+
 void inclusaoDeArquivo (FILE *arqBackup, char *nome, int optA, fila_t *diretorio) { 
 
     // verifica se o arquivo ja existe no backup
 
     nodo_f_t *nodoBuscado = busca_fila(diretorio, nome);
-
-
 
     // verifica se a opcao de atualizar foi selecionada
     if(optA) {
