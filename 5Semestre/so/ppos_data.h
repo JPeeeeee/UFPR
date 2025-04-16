@@ -8,6 +8,9 @@
 #define __PPOS_DATA__
 
 #include <ucontext.h>		// biblioteca POSIX de trocas de contexto
+#include <Kernel/sys/_types/_ucontext.h>
+
+ucontext_t ContextCurrent, ContextMain;
 
 // Estrutura que define um Task Control Block (TCB)
 typedef struct task_t
