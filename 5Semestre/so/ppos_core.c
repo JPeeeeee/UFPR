@@ -9,15 +9,12 @@ static task_t *CurrentTask;
 static task_t MainTask;
 static int taskCounter = 0;
 
-
 # define PRONTA 0
 # define EXECUTANDO 1
 # define TERMINADA 2
 
 void ppos_init() {
     setvbuf (stdout, 0, _IONBF, 0) ;
-    
-
     getcontext(&(MainTask.context));
     MainTask.id = 0;
     MainTask.status = PRONTA;
@@ -30,15 +27,12 @@ int task_init (task_t *task, void (*start_routine)(void *),  void *arg) {
     getcontext(&(task->context));
 
     char *stack = malloc (STACKSIZE) ;
-    if (stack)
-    {
+    if (stack) {
        task->context.uc_stack.ss_sp = stack ;
        task->context.uc_stack.ss_size = STACKSIZE ;
        task->context.uc_stack.ss_flags = 0 ;
        task->context.uc_link = 0 ;
-    }
-    else
-    {
+    } else {
        perror ("Erro na criação da pilha: ") ;
        exit (1) ;
     }
@@ -55,12 +49,12 @@ int task_init (task_t *task, void (*start_routine)(void *),  void *arg) {
 
 int task_switch (task_t *task) {
     if (task == NULL) 
-	return -1;
+	    return -1;
 
     task_t *oldTask = CurrentTask;
 
     if (oldTask != &MainTask)
-	oldTask->status = PRONTA;
+	    oldTask->status = PRONTA;
 
     CurrentTask = task;
     task->status = EXECUTANDO;
