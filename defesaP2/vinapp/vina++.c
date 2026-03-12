@@ -8,7 +8,7 @@
 #include "libfila.h"
 #include "libutils.h"
 
-
+#define MAXPATH 1024
 
 int main(int argc, char *argv[]) {
 
@@ -39,10 +39,12 @@ int main(int argc, char *argv[]) {
 
 
                 for (argCount = 3; argCount < argc; argCount++) { 
+
                     inclusaoDeArquivo(arqBackup, argv[argCount], 0, diretorio);
                 }
                 if (fila_vazia(diretorio))
                     return -1;
+                    
                 free(diretorio);
                 rewind(arqBackup);
                 fclose(arqBackup);
@@ -81,23 +83,28 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'x':
-                if (argc < 4){
-                    printf("Poucos argumentos na chamada do programa!\n");
-                    return -1;
+                if(arqBackup) {
+                    leDiretorio(diretorio, arqBackup);
+
+                    if (argc > 3) {
+                        for (argCount = 3; argCount < argc; argCount++) {
+                            extraiArquivo(argv[argCount], arqBackup, diretorio);
+                        }
+                    } else {
+                        if (fila_vazia(diretorio))
+                            return -1;
+                        else {
+                            nodo_f_t *nodoAux = diretorio->ini;
+                            while(nodoAux != NULL) {
+                                extraiArquivo(nodoAux->nome, arqBackup, diretorio);
+                                nodoAux = nodoAux->prox;
+                            }
+                        }
+                    }
+                    free(diretorio);
+                    fclose(arqBackup);
                 }
 
-                if (!arqBackup){
-                    arqBackup = fopen(argv[2], "w+");
-                    fwrite(&RESERVED_SPACE, sizeof(int), 1, arqBackup);
-                } else {
-                    leDiretorio(diretorio, arqBackup);
-                }
-                for (argCount = 3; argCount < argc; argCount++)
-                    extraiArquivo(argv[argCount], arqBackup, diretorio);
-                if (fila_vazia(diretorio))
-                    return -1;
-                free(diretorio);
-                fclose(arqBackup);
                 break;
 
             case 'r':

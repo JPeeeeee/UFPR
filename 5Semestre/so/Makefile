@@ -1,17 +1,5 @@
-CC = gcc
-CFLAGS =  -Wall -g
+ppos: ppos_core.c queue.c
+	gcc -Wall -c ppos_core.c queue.c
 
-testafila: testafila.o queue.o
-	$(CC) testafila.o queue.o -o testafila
-
-queue.o : queue.c
-	$(CC) $(CFLAGS) -c queue.c
-
-testafila.o: testafila.c
-	$(CC) $(CFLAGS) -c testafila.c
-
-clean :
-	rm -f *.o queue
-
-run: 
-	./queue
+clean:
+	rm -f ppos

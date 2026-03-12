@@ -14,9 +14,9 @@
 #include "queue.h"
 
 // verifica o sistema operacional
-// #ifndef __linux__
-// #error "Este código foi planejado para ambientes Linux."
-// #endif
+ #ifndef __linux__
+ #error "Este código foi planejado para ambientes Linux."
+ #endif
 
 // imprime na tela um elemento da fila (chamada pela função queue_print)
 void print_item(void *ptr)

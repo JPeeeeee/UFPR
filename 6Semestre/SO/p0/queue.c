@@ -67,6 +67,7 @@ int queue_add(struct queue_t *queue, void *item) {
 
     queue->tail->proximo = novo;
     queue->tail = novo;
+    queue->iterador = novo;
     return NOERROR;
 }
 

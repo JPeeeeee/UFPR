@@ -30,6 +30,9 @@ struct fila {
 };
 typedef struct fila fila_t;
 
+// arruma o nome do arquivo
+char *setNome(char *nome, char *nomeAux);
+
 // retorna um ponteiro para a estrutura fila
 fila_t * cria_fila ();
 

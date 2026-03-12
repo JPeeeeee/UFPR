@@ -12,7 +12,6 @@
 
 #define MAXPATH 1024
 
-// 
 fila_t* cria_fila () {
 
     fila_t *fila = malloc(sizeof(fila_t));
@@ -28,23 +27,15 @@ fila_t* cria_fila () {
 }
 
 // funcao que seta o nome do arquivo para caso seja caminho absoluto ou relativo
-char *setNome (char *nome) {
-    char *aux = malloc(sizeof(MAXPATH));
-
+char *setNome (char *nome, char *nomeAux) {
     if (nome[0] == '/') {
-        aux[0] = '.';
-        strncat(aux, nome, strlen(nome));
-        printf("setNome: %s\n", aux);
-        return aux;
-    } else {
-        for (int i = 1; i < strlen(nome); i++) {
-            if (nome[i] == '/') {
-                strncat(aux, "./", 2);
-                strncat(aux, nome, strlen(nome));
-                printf("setNome: %s\n", aux);
-                return aux;
-            }
-        }
+        nomeAux[0] = '.';
+        strcat(nomeAux, nome);
+        return nomeAux;
+    } else if (nome[0] != '.' && nome[1] != '/')  {
+        strcat(nomeAux, "./");
+        strcat(nomeAux, nome);
+        return nomeAux;
     }
 
     return nome;
@@ -53,12 +44,12 @@ char *setNome (char *nome) {
 nodo_f_t *busca_fila (fila_t *f, char *name) {
 
     nodo_f_t *aux = f->ini;
-    char *auxName = setNome(name);
+    char *nomeAux = calloc(sizeof(char), MAXPATH);
     // enquanto aux receber um nodo da fila, compara a letra de aux com o 
     // nome procurado e, caso sejam iguais, retorna um ponteiro para o nodo atual
     while (aux != NULL) {    
 
-        if (!strcmp(auxName, aux->nome)){
+        if (!strcmp(setNome(name, nomeAux), aux->nome)){
             return aux;
         }
         aux = aux->prox;
@@ -95,15 +86,17 @@ int insere_nodo_fila(fila_t *f, nodo_f_t *novo){
 int insere_fila (fila_t* f, char *name, FILE *arqBackup, struct stat info) {
 
     nodo_f_t *novo = malloc(sizeof(nodo_f_t));
-    
+    char *nomeAux = calloc(sizeof(char), MAXPATH);
     if (novo == NULL)
         return 0;
     
     // inicializa os valores do novo nodo e aloca o tamanho de um unico 
     // valor int e insere a chave na primeira posicao do vetor
     novo->prox = NULL;
-    novo->nome = setNome(name);
+    novo->nome = setNome(name, nomeAux);
+    // printf("novo->nome: %s\n", novo->nome);
     novo->path = name;
+
 
     // seta os valores de inicio para caso nao exista nenhum arquivo em backup
     if (f->fim){
@@ -123,7 +116,6 @@ int insere_fila (fila_t* f, char *name, FILE *arqBackup, struct stat info) {
     novo->UID = info.st_uid;
     novo->group = info.st_gid;
     novo->posicao = tamanho_fila(f) + 1;
-
     // reajusta os ponteiros de inicio e fim da fila
     if (f->tamanho == 0){
         f->ini = novo;

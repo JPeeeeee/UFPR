@@ -16,3 +16,4 @@ void extraiArquivo(char *nome, FILE *arqBackup, fila_t *f);
 
 // move o arquivo desejado para a posicao logo abaixo do arquivo especificado na chamada do programa
 void moveArquivo(char *movido, char *anterior, FILE *arqBackup, fila_t *f);
+

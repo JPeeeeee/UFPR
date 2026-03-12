@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <string.h>
 #include <pwd.h>
 #include <grp.h>
+#include <limits.h>
 #include <time.h>
 #include "libmanagefiles.h"
 #include "libfila.h"
@@ -195,7 +196,6 @@ void extraiArquivo(char *nome, FILE *arqBackup, fila_t *f) {
     // cria o arquivo no diretorio atual e seta as permissoes
     FILE *arqTranscrever = fopen(nome, "w");
     chmod(extraido->path, extraido->permissoes);
-    printf("Arquivo extraido em: %s\n", nome);
     if (!arqTranscrever)
         return;
 

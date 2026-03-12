@@ -10,15 +10,21 @@
 #include <ucontext.h>		// biblioteca POSIX de trocas de contexto
 
 
+
 // Estrutura que define um Task Control Block (TCB)
 typedef struct task_t
 {
   struct task_t *prev, *next ;		// ponteiros para usar em filas
   int id ;				// identificador da tarefa
+  int vg_id;  				// idedntificador vg
   ucontext_t context ;			// contexto armazenado da tarefa
   short status ;			// pronta, rodando, suspensa, ...
+  int prio;
+  int prioDinamica;
+  int age;
   // ... (outros campos serão adicionados mais tarde)
 } task_t ;
+
 
 // estrutura que define um semáforo
 typedef struct

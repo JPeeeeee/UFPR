@@ -20,4 +20,4 @@ clean :
 	rm -f *.o vina++
 
 remove : 
-	rm -f backup.vpp
+	rm -f *.vpp
